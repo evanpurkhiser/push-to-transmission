@@ -1,4 +1,4 @@
-Send To Transmission
+### Send To Transmission
 
 A lightweight Chrome extension that intercepts torrent file downloads and sends
 them to a configured transmission server.
