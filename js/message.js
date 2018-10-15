@@ -1,39 +1,35 @@
-var id = "send_to_transmission_message";  // The ID of the message div being added
+if (!window.SendToTransmissionAdded) {
+  chrome.runtime.onMessage.addListener(({ message, options }) => {
+    const type = options.error ? 'error' : 'success';
 
-// Remove existing message if exists
-if (document.getElementById(id)) {
-    let existing = document.getElementById(id);
-    existing.parentNode.removeChild(existing);
-};
+    // Create a new message element
+    const el = document.createElement('div');
+    el.classList.add(
+      'send-to-transmission-message',
+      `send-to-transmission-message-${type}`
+    );
 
-// Add message div with fadeIn class to current tab body
-var div = document.createElement("div");
-div.id = id;
-div.className = "send-to-transmission-message";
-div.classList.add("send-to-transmission-fade-in");
-document.body.appendChild(div);
+    // Add the message text
+    const text = document.createElement('p');
+    text.insertAdjacentText('afterbegin', message);
+    el.append(text);
 
-function removeMessage() {
-    let msg = document.getElementById(id);
-    // Don't try to remove messages that have already been removed by newly generated messages
-    if (msg != undefined) {
-        msg.classList.remove("send-to-transmission-fade-in");
-        msg.classList.add("send-to-transmission-fade-out");
+    // Add the torrent name if provided
+    if (options.torrentName) {
+      const text = document.createElement('p');
+      text.classList.add('send-to-transmission-message-torrent-name');
+      text.insertAdjacentText('afterbegin', options.torrentName);
+      el.append(text);
+    }
 
-        // Removing the div at the same time as the animation finishes causes flickering,
-        // removing it slightly before the animation finishes seems to mitigate this
+    // Animate out prior messages
+    Array.prototype.slice
+      .call(document.querySelectorAll('.send-to-transmission-message'))
+      .map(el => el.classList.add('send-to-transmission-message-hide'));
 
-        setTimeout(function() {
-            // Check the element again as the msg variable has changed since being set
-            if (document.getElementById(id) != undefined) {
-                msg.parentNode.removeChild(msg);                    
-            }
-        }, 470);
-    };
+    document.body.insertAdjacentElement('beforeend', el);
+    setTimeout(_ => el.remove(), 4000);
+  });
 }
 
-// Fade out and remove message div after timeout
-setTimeout(
-    removeMessage,
-    send_to_transmission_message_timeout  // This is set by showMessage in background.js 
-);
+window.SendToTransmissionAdded = true;
