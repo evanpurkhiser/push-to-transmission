@@ -1,4 +1,4 @@
-.send-to-transmission-message {
+.push-to-transmission-message {
   position: fixed;
   z-index: 2147483647;
   top: 0;
@@ -18,7 +18,7 @@
     stt-fade 300ms 3s ease-in-out reverse forwards;
 }
 
-.send-to-transmission-message-hide {
+.push-to-transmission-message-hide {
   opacity: 0;
   animation: none;
 }
@@ -37,21 +37,21 @@
   }
 }
 
-.send-to-transmission-message-success {
+.push-to-transmission-message-success {
   background: rgba(46, 204, 62, 0.95);
 }
 
-.send-to-transmission-message-error {
+.push-to-transmission-message-error {
   background: rgba(255, 64, 54, 0.95);
 }
 
-.send-to-transmission-message p {
+.push-to-transmission-message p {
   margin: 0;
   padding: 0;
   font-weight: 600;
 }
 
-.send-to-transmission-message .send-to-transmission-message-torrent-name {
+.push-to-transmission-message .push-to-transmission-message-torrent-name {
   margin-top: 0.5em;
   font-size: 11px;
 }
