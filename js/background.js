@@ -99,7 +99,9 @@ async function getToken() {
 
 function onRequest({ type, responseHeaders, url }) {
   const isTorrentFile = responseHeaders.some(
-    h => h.name === 'content-type' && h.value === 'application/x-bittorrent'
+    h =>
+      h.name.toLowerCase() === 'content-type' &&
+      h.value === 'application/x-bittorrent'
   );
 
   if (!isTorrentFile || type == 'xmlhttprequest') {
