@@ -132,7 +132,7 @@ function onOptions(init) {
   });
 }
 
-// Get options and intialize extension
+// Get options and initialize extension
 onOptions(true);
 
 // Setup listeners
